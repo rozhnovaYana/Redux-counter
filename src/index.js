@@ -1,25 +1,15 @@
-import {createStore} from 'redux'
-const reducer=(state=24, action)=>{
-  switch(action.type){
-    case "dec":return state-1
-    case "inc": return state+1
-    case "reload": return 24
-    default: return state
-  }
-}
+import React from "react"
+import ReactDOM from "react-dom"
+import {createStore, bindActionCreators} from 'redux'
+import reducer from "./reducer"
+import App from "./components/app"
+import { Provider } from "react-redux"
 const store=createStore(reducer)
-const inc=()=>({type:'inc'})
-const dec=()=>({type:'dec'})
-const reload=()=>({type:'reload'})
-store.subscribe(()=>{
-  document.querySelector("#count").textContent=store.getState()
-})
-document.querySelector("#inc").addEventListener('click', ()=>{
-  store.dispatch(inc())
-})
-document.querySelector("#dec").addEventListener('click', ()=>{
-  store.dispatch(dec())
-})
-document.querySelector("#reload").addEventListener('click', ()=>{
-  store.dispatch(reload())
-})
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App/>
+  </Provider>, 
+  document.getElementById("root"))
+
+
